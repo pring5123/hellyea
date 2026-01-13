@@ -21,6 +21,7 @@ GitHub Actions에서 자동으로 빌드된 실행 파일을 다운로드할 수
 - **자동 타임스탬프**: 백업할 때마다 타임스탬프가 포함된 폴더 생성
 - **재귀 복사**: 하위 폴더와 파일을 모두 백업
 - **진행 상황 표시**: 백업 진행 상황을 실시간으로 확인
+- **자동 빌드 & 이메일 전송**: GitHub Actions로 자동 빌드 후 이메일 전송
 
 ## 시스템 요구사항
 
@@ -65,6 +66,32 @@ cmake --build .
 ```
 
 빌드가 완료되면 `build\bin\HanmiBackup.exe` 파일이 생성됩니다.
+
+## 이메일 자동 전송 설정
+
+GitHub Actions 빌드가 성공하면 자동으로 `2024502@hanmisemi.com`으로 실행 파일을 이메일로 전송합니다.
+
+### GitHub Secrets 설정 방법
+
+이메일 전송 기능을 활성화하려면 다음 설정이 필요합니다:
+
+1. GitHub 리포지토리 페이지 → **Settings** 클릭
+2. 왼쪽 메뉴에서 **Secrets and variables** → **Actions** 클릭
+3. **New repository secret** 버튼 클릭하여 다음 시크릿 추가:
+
+   - **`EMAIL_USERNAME`**: 발신자 Gmail 주소 (예: `your-email@gmail.com`)
+   - **`EMAIL_PASSWORD`**: Gmail 앱 비밀번호
+
+### Gmail 앱 비밀번호 생성 방법
+
+1. [Google 계정 관리](https://myaccount.google.com/) 페이지 방문
+2. **보안** 탭 클릭
+3. **2단계 인증** 활성화 (아직 안 되어 있다면)
+4. **앱 비밀번호** 검색 및 클릭
+5. 앱 선택: **메일**, 기기 선택: **기타 (사용자 설정 이름)** → "GitHub Actions" 입력
+6. **생성** 클릭 후 생성된 16자리 비밀번호를 `EMAIL_PASSWORD`로 사용
+
+**참고**: Gmail 대신 다른 SMTP 서버를 사용하려면 `.github/workflows/build.yml` 파일의 `server_address`와 `server_port`를 수정하세요.
 
 ## 사용 방법
 

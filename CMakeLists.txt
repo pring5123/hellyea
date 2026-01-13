@@ -30,6 +30,9 @@ if(MSVC)
     # 유니코드 사용
     add_definitions(-DUNICODE -D_UNICODE)
 
+    # UTF-8 인코딩 사용 (한글 깨짐 방지)
+    target_compile_options(HanmiBackup PRIVATE /utf-8)
+
     # 경고 레벨 설정
     target_compile_options(HanmiBackup PRIVATE /W4)
 
@@ -41,6 +44,9 @@ endif()
 if(MINGW)
     # 유니코드 사용
     add_definitions(-DUNICODE -D_UNICODE)
+
+    # UTF-8 인코딩 사용 (한글 깨짐 방지)
+    target_compile_options(HanmiBackup PRIVATE -fexec-charset=UTF-8)
 
     # 정적 링크 (독립 실행형 실행 파일)
     target_link_options(HanmiBackup PRIVATE -static-libgcc -static-libstdc++ -static)

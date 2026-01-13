@@ -52,3 +52,27 @@ jobs:
         prerelease: false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Send email with build artifact
+      if: success()
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 587
+        secure: true
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: "한미 백업 프로그램 빌드 완료 - ${{ github.sha }}"
+        to: 2024502@hanmisemi.com
+        from: ${{ secrets.EMAIL_USERNAME }}
+        body: |
+          한미 폴더 백업 프로그램 빌드가 성공적으로 완료되었습니다.
+
+          커밋: ${{ github.sha }}
+          브랜치: ${{ github.ref }}
+          빌드 시간: ${{ github.event.head_commit.timestamp }}
+
+          첨부된 파일을 실행하시면 됩니다.
+
+          GitHub Actions: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        attachments: build/bin/Release/HanmiBackup.exe
