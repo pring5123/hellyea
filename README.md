@@ -67,13 +67,15 @@ cmake --build .
 
 빌드가 완료되면 `build\bin\HanmiBackup.exe` 파일이 생성됩니다.
 
-## 이메일 자동 전송 설정
+## 이메일 자동 전송 설정 (선택사항)
 
 GitHub Actions 빌드가 성공하면 자동으로 `2024502@hanmisemi.com`으로 실행 파일을 이메일로 전송합니다.
 
+**참고**: 이메일 설정은 선택사항입니다. Secrets를 설정하지 않아도 빌드는 정상적으로 완료되며, Artifacts에서 실행 파일을 다운로드할 수 있습니다.
+
 ### GitHub Secrets 설정 방법
 
-이메일 전송 기능을 활성화하려면 다음 설정이 필요합니다:
+이메일 자동 전송 기능을 활성화하려면 다음 설정이 필요합니다:
 
 1. GitHub 리포지토리 페이지 → **Settings** 클릭
 2. 왼쪽 메뉴에서 **Secrets and variables** → **Actions** 클릭
