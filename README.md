@@ -1,6 +1,18 @@
 # 한미 폴더 백업 프로그램
 
+![Build Status](https://github.com/pring5123/hellyea/workflows/Build%20Windows%20Backup%20Program/badge.svg)
+
 C:\hanmi 폴더를 백업하는 간단한 GUI 백업 프로그램입니다.
+
+## 다운로드
+
+GitHub Actions에서 자동으로 빌드된 실행 파일을 다운로드할 수 있습니다:
+
+1. [Actions 탭](../../actions) 방문
+2. 최신 성공한 빌드 클릭
+3. 하단의 "Artifacts" 섹션에서 `HanmiBackup-Windows-x64` 다운로드
+
+또는 태그가 생성되면 [Releases 페이지](../../releases)에서 다운로드할 수 있습니다.
 
 ## 주요 기능
 
@@ -18,13 +30,21 @@ C:\hanmi 폴더를 백업하는 간단한 GUI 백업 프로그램입니다.
 
 ## 빌드 방법
 
-### 방법 1: 빌드 스크립트 사용 (권장)
+### 방법 1: GitHub Actions 사용 (가장 쉬움)
+
+코드를 푸시하면 GitHub Actions가 자동으로 Windows 환경에서 빌드합니다:
+
+- Push나 PR 시 자동으로 빌드 실행
+- 빌드된 `HanmiBackup.exe`는 Artifacts로 다운로드 가능
+- v로 시작하는 태그 생성 시 자동으로 Release 생성
+
+### 방법 2: 빌드 스크립트 사용 (로컬 빌드)
 
 ```batch
 build.bat
 ```
 
-### 방법 2: 수동 빌드
+### 방법 3: 수동 빌드
 
 #### Visual Studio 사용
 
@@ -71,10 +91,14 @@ C:\hanmi_backup\
 
 ```
 hellyea/
+├── .github/
+│   └── workflows/
+│       └── build.yml     # GitHub Actions 빌드 설정
 ├── src/
 │   └── main.cpp          # 메인 프로그램 소스 코드
 ├── CMakeLists.txt        # CMake 빌드 설정
-├── build.bat             # Windows 빌드 스크립트
+├── build.bat             # MinGW 빌드 스크립트
+├── build_vs.bat          # Visual Studio 빌드 스크립트
 └── README.md             # 이 파일
 ```
 
@@ -83,6 +107,7 @@ hellyea/
 - **언어**: C++ (C++17)
 - **GUI**: Windows API
 - **빌드 시스템**: CMake
+- **CI/CD**: GitHub Actions
 
 ## 특징
 
