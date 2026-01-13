@@ -54,7 +54,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Send email with build artifact
-      if: success() && secrets.EMAIL_USERNAME != '' && secrets.EMAIL_PASSWORD != ''
+      if: success() && secrets.EMAIL_USERNAME && secrets.EMAIL_PASSWORD
       uses: dawidd6/action-send-mail@v3
       with:
         server_address: smtp.gmail.com
