@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <commctrl.h>
 #include <shlobj.h>
+#include <shlwapi.h>
 #include <string>
 #include <sstream>
 #include <ctime>
@@ -9,6 +10,7 @@
 
 #pragma comment(lib, "comctl32.lib")
 #pragma comment(lib, "shell32.lib")
+#pragma comment(lib, "shlwapi.lib")
 
 // 윈도우 컨트롤 ID
 #define ID_BUTTON_BACKUP 1001
