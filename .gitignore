@@ -1,0 +1,45 @@
+# 빌드 디렉토리
+build/
+bin/
+
+# 실행 파일
+*.exe
+*.dll
+*.so
+*.dylib
+
+# 오브젝트 파일
+*.o
+*.obj
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+CTestTestFile.cmake
+_deps/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.VC.db
+*.VC.opendb
+
+# MinGW
+*.a
+
+# 임시 파일
+*.tmp
+*.bak
+*.swp
+*~
+
+# IDE
+.vscode/
+.idea/
