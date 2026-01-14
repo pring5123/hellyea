@@ -73,27 +73,113 @@ GitHub Actions 빌드가 성공하면 자동으로 `2024502@hanmisemi.com`으로
 
 **참고**: 이메일 설정은 선택사항입니다. Secrets를 설정하지 않아도 빌드는 정상적으로 완료되며, Artifacts에서 실행 파일을 다운로드할 수 있습니다.
 
-### GitHub Secrets 설정 방법
+### 1단계: Gmail 앱 비밀번호 생성
 
-이메일 자동 전송 기능을 활성화하려면 다음 설정이 필요합니다:
+Gmail에서 이메일을 보내려면 **앱 비밀번호**가 필요합니다. (일반 Gmail 비밀번호가 아닙니다!)
 
-1. GitHub 리포지토리 페이지 → **Settings** 클릭
-2. 왼쪽 메뉴에서 **Secrets and variables** → **Actions** 클릭
-3. **New repository secret** 버튼 클릭하여 다음 시크릿 추가:
+#### Gmail 2단계 인증 활성화
 
-   - **`EMAIL_USERNAME`**: 발신자 Gmail 주소 (예: `your-email@gmail.com`)
-   - **`EMAIL_PASSWORD`**: Gmail 앱 비밀번호
+1. **Google 계정 페이지 접속**
+   - 브라우저에서 https://myaccount.google.com 접속
+   - Gmail 계정으로 로그인
 
-### Gmail 앱 비밀번호 생성 방법
+2. **보안 설정으로 이동**
+   - 왼쪽 메뉴 또는 상단에서 **"보안"** 클릭
+   - 아래로 스크롤하여 **"Google에 로그인"** 섹션 찾기
 
-1. [Google 계정 관리](https://myaccount.google.com/) 페이지 방문
-2. **보안** 탭 클릭
-3. **2단계 인증** 활성화 (아직 안 되어 있다면)
-4. **앱 비밀번호** 검색 및 클릭
-5. 앱 선택: **메일**, 기기 선택: **기타 (사용자 설정 이름)** → "GitHub Actions" 입력
-6. **생성** 클릭 후 생성된 16자리 비밀번호를 `EMAIL_PASSWORD`로 사용
+3. **2단계 인증 설정**
+   - **"2단계 인증"** 항목 클릭
+   - 이미 활성화되어 있다면 "사용 설정됨" 표시, 아니면 "사용 중지됨" 표시
+   - **"사용 설정됨"이 아니라면:**
+     - "시작하기" 버튼 클릭
+     - 비밀번호 재입력
+     - 전화번호 입력 (SMS 또는 음성 통화로 인증 코드 받기)
+     - 인증 코드 입력하여 2단계 인증 완료
 
-**참고**: Gmail 대신 다른 SMTP 서버를 사용하려면 `.github/workflows/build.yml` 파일의 `server_address`와 `server_port`를 수정하세요.
+#### 앱 비밀번호 생성
+
+2단계 인증이 활성화된 후:
+
+1. **앱 비밀번호 메뉴 접근**
+   - 같은 "보안" 페이지에서 **"Google에 로그인"** 섹션 확인
+   - **"앱 비밀번호"** 항목 찾기 (2단계 인증 아래에 있음)
+   - 클릭하면 비밀번호 재입력 요구됨
+
+2. **앱 비밀번호 생성**
+   - "앱 이름" 입력란에 **"GitHub Actions"** 입력 (또는 원하는 이름)
+   - **"만들기"** 버튼 클릭
+   - **16자리 비밀번호**가 생성됨 (예: `abcd efgh ijkl mnop`)
+   - ⚠️ **중요**: 이 비밀번호는 한 번만 표시되므로 반드시 복사해두세요!
+
+3. **비밀번호 저장**
+   - 생성된 16자리 비밀번호를 복사 (공백 포함 또는 제외, 둘 다 가능)
+   - 안전한 곳에 임시 저장
+
+**참고**:
+- 앱 비밀번호는 일반 Gmail 비밀번호와 다릅니다
+- 앱 비밀번호 메뉴가 보이지 않으면 2단계 인증이 제대로 활성화되지 않은 것입니다
+- 생성된 비밀번호는 나중에 다시 확인할 수 없으니 반드시 복사하세요
+
+### 2단계: GitHub Secrets 설정
+
+이제 GitHub 리포지토리에 이메일 정보를 안전하게 저장합니다.
+
+1. **GitHub 리포지토리 페이지 접속**
+   - 이 리포지토리 (pring5123/hellyea) 페이지로 이동
+   - 상단 메뉴에서 **"Settings"** 탭 클릭
+   - (Settings가 보이지 않으면 리포지토리 권한이 없는 것입니다)
+
+2. **Secrets 설정 메뉴로 이동**
+   - 왼쪽 사이드바에서 **"Secrets and variables"** 찾기
+   - 하위 메뉴 **"Actions"** 클릭
+   - "Repository secrets" 섹션이 표시됨
+
+3. **첫 번째 Secret 추가: EMAIL_USERNAME**
+   - 오른쪽 상단의 **"New repository secret"** 버튼 클릭
+   - **Name**: `EMAIL_USERNAME` (정확히 입력!)
+   - **Secret**: 발신자 Gmail 주소 입력 (예: `yourname@gmail.com`)
+   - **"Add secret"** 버튼 클릭
+
+4. **두 번째 Secret 추가: EMAIL_PASSWORD**
+   - 다시 **"New repository secret"** 버튼 클릭
+   - **Name**: `EMAIL_PASSWORD` (정확히 입력!)
+   - **Secret**: 위에서 생성한 16자리 앱 비밀번호 입력 (공백 있어도 됨)
+   - **"Add secret"** 버튼 클릭
+
+5. **설정 완료 확인**
+   - Secrets 목록에 `EMAIL_USERNAME`과 `EMAIL_PASSWORD`가 보이면 성공
+   - Secret 값은 보안상 표시되지 않음 (●●●●●●로 표시)
+
+### 3단계: 테스트
+
+1. **코드 Push하여 빌드 트리거**
+   - 아무 파일이나 수정하고 commit & push
+   - 또는 GitHub Actions 탭에서 "Run workflow" 수동 실행
+
+2. **빌드 완료 대기**
+   - Actions 탭에서 빌드 진행 상황 확인
+   - 약 5-10분 소요
+
+3. **이메일 수신 확인**
+   - `2024502@hanmisemi.com` 메일함 확인
+   - 제목: "한미 백업 프로그램 빌드 완료"
+   - 첨부파일: `HanmiBackup.exe`
+
+### 문제 해결
+
+**앱 비밀번호 메뉴가 보이지 않는 경우:**
+- 2단계 인증이 제대로 활성화되었는지 확인
+- Google Workspace 계정은 관리자 설정이 필요할 수 있음
+- 다른 브라우저나 시크릿 모드에서 시도
+
+**이메일이 전송되지 않는 경우:**
+- GitHub Secrets에 `EMAIL_USERNAME`과 `EMAIL_PASSWORD`가 정확히 입력되었는지 확인
+- Gmail 앱 비밀번호를 올바르게 복사했는지 확인
+- Actions 탭에서 "Send email" 단계 로그 확인
+
+**다른 이메일 서비스 사용:**
+- Gmail 대신 다른 SMTP 서버를 사용하려면 `.github/workflows/build.yml` 파일의 `server_address`와 `server_port`를 수정하세요
+- 예: Outlook (smtp.office365.com:587), Naver (smtp.naver.com:587)
 
 ## 사용 방법
 
